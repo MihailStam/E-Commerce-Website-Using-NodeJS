@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  group75-app:
+    container_name: group75-app
+    image: group75-app
+    build: .
+    depends_on:
+      - group75mongo
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend
+      - backend
+
+  group75mongo:
+    container_name: group75mongo
+    image: mongo
+    volumes:
+      - group75mongodata:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+
+volumes:
+  group75mongodata:
+
+networks:
+  backend:
+     internal: true
+  frontend:
